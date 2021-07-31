@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.socket.io/4.1.2/socket.io.min.js" integrity="sha384-toS6mmwu70G0fw54EGlWWeA4z3dyJ+dlXBtSURSKN4vyRFOcxd3Bzjj/AoOwY+Rg" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <title>Document</title>
+        <script>
+            $(document).ready(()=>{
+                const socket = io("http://localhost:5000");
+                socket.on('connect',()=>{
+                    socket.send('User has connected\n');
+                    console.log('connect bs');
+                });
+                socket.on('message',(msg)=>{
+                    $('#messages').append('<li>'+msg+'</li>');
+                    console.log('message bs');
+                });
+                $('#sendbutton').on('click', ()=>{
+                    socket.send($('#myMessage').val());
+                    $('#myMessage').val('');
+                    console.log('sendbutton bs');
+                });
+            });
+            </script>
+        </script>
+    </head>
+    <body>
+        <ul id="messages"></ul>
+        <input type="text" id="myMessage"></input>
+        <button id="sendbutton">Send</button>
+    </body>
+</html>
+
